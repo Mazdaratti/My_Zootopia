@@ -17,17 +17,17 @@ def generate_animal_info(animals_data):
         diet = characteristics.get("diet")
         animal_type = characteristics.get("type")
         locations = animal.get("locations", [])
-
+        animals_info_str += "<li class='cards__item'>"
         if name:
-            animals_info_str += f"Name: {name}\n"
+            animals_info_str += f"Name: {name}<br/>\n"
         if diet:
-            animals_info_str += f"Diet: {diet}\n"
+            animals_info_str += f"Diet: {diet}<br/>\n"
         if locations:
-            animals_info_str += f"Location: {locations[0]}\n"
+            animals_info_str += f"Location: {locations[0]}<br/>\n"
         if animal_type:
-            animals_info_str += f"Type: {animal_type}\n"
+            animals_info_str += f"Type: {animal_type}<br/>\n"
 
-        animals_info_str += "\n"
+        animals_info_str += "</li>"
 
     return animals_info_str
 
