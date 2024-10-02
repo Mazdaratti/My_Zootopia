@@ -1,5 +1,7 @@
 import json
 import sys
+from webbrowser import open as open_browser
+
 
 def load_file(file_path, file_type="data"):
     """
@@ -30,13 +32,13 @@ def load_file(file_path, file_type="data"):
 
 def serialize_animal(animal):
     """
-        Serialize a single animal's data into an HTML list item.
+        Convert a single animal's data into an HTML list item.
 
-        Parameters:
-            animal (dict): A dictionary with animal data.
+        Args:
+            animal (dict): A dictionary representing an animal's data.
 
         Returns:
-            str: An HTML string representing the animal.
+            str: An HTML string representation of the animal.
     """
     output = '    <li class="cards__item">\n'
     animal_name = animal.get("name", "Unknown Animal")
@@ -59,15 +61,76 @@ def serialize_animal(animal):
     return output
 
 
-def serialize_animals(data):
-    """Serialize a list of animals data into an HTML string."""
-    return ''.join(serialize_animal(animal) for animal in data)
+def serialize_animals(data, skin_type=None):
+    """
+    Convert a list of animals into HTML, with optional filtering by skin type.
+
+    Args:
+        data (list): A list of animal dictionaries.
+        skin_type (str, optional): The skin type to filter by. If None, all animals are serialized.
+
+    Returns:
+        str: An HTML string representing the filtered or unfiltered list of animals.
+    """
+    return ''.join(
+        serialize_animal(animal)
+        for animal in data
+        if skin_type is None or animal.get('characteristics', {}).get('skin_type') == skin_type
+    )
+
+
+def generate_list_of_values(data):
+    """
+    Generate a list of unique skin types from animal data, including an 'All skin types' option.
+
+    Args:
+        data (list): A list of animal dictionaries.
+
+    Returns:
+        list: A list of skin types.
+    """
+    values = ["All skin types"]
+    values.extend({animal.get("characteristics", {}).get("skin_type") for animal in data if animal.get("characteristics", {}).get("skin_type")})
+    return values
+
+
+def display_menu(values):
+    """
+    Display a menu for selecting skin type.
+
+    Args:
+        values (list): A list of skin types.
+    """
+    print("\nPlease choose the skin type of animals you want to see:")
+    for index, value in enumerate(values):
+        print(f"{index}. {value}")
+    print()
+
+
+def get_user_choice(menu_entries):
+    """
+    Prompt the user to select an option from the menu and ensure valid input.
+
+    Args:
+        menu_entries (list): A list of menu entries.
+
+    Returns:
+        int: The index of the chosen entry.
+    """
+    while True:
+        user_input = input(f"Enter choice (0-{len(menu_entries) - 1}): ").strip()
+        if user_input.isdigit():
+            choice = int(user_input)
+            if 0 <= choice < len(menu_entries):
+                return choice
+        print(f"Invalid choice: [{user_input}]")
 
 
 def write_file(file_path, content):
     """Write the given content to a file."""
     with open(file_path, "w") as file:
         file.write(content)
+        print(f"Website was successfully generated at {file_path}.")
 
 
 def main():
@@ -81,10 +144,15 @@ def main():
         print(e)
         sys.exit(1)
 
-    animals_info = serialize_animals(data)
+    values = generate_list_of_values(data)
+    display_menu(values)
+
+    choice = get_user_choice(values)
+    animals_info = serialize_animals(data) if choice == 0 else serialize_animals(data, values[choice])
+
     updated_template = template.replace("__REPLACE_ANIMALS_INFO__", animals_info)
     write_file("animals.html", updated_template)
-
+    open_browser("animals.html")
 
 if __name__ == "__main__":
     main()
