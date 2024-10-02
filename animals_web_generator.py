@@ -7,29 +7,32 @@ def load_json(file_path):
         return json.load(json_file)
 
 
-def serialize_animal(animal_obj):
-    """Generate formatted information for a single animal."""
-    name = animal_obj.get("name")
-    characteristics = animal_obj.get("characteristics", {})
-    diet = characteristics.get("diet")
-    animal_type = characteristics.get("type")
-    locations = animal_obj.get("locations", [])
+def serialize_animal(animal):
+    """
+        Serialize a single animal's data into an HTML list item.
 
-    # Using a list to accumulate strings for better performance
-    animal_info_parts = ["<li class='cards__item'>"]
+        Parameters:
+            animal (dict): A dictionary with animal data.
 
-    if name:
-        animal_info_parts.append(f"Name: {name}<br/>\n")
-    if diet:
-        animal_info_parts.append(f"Diet: {diet}<br/>\n")
-    if locations:
-        animal_info_parts.append(f"Location: {locations[0]}<br/>\n")
-    if animal_type:
-        animal_info_parts.append(f"Type: {animal_type}<br/>\n")
-
-    animal_info_parts.append("</li>")
-
-    return ''.join(animal_info_parts)
+        Returns:
+            str: An HTML string representing the animal.
+    """
+    output = "<li class='cards__item'>"
+    animal_details = {
+        "Name": animal.get("name", "Unknown Animal"),
+        "Scientific name": animal.get("taxonomy", {}).get("scientific_name"),
+        "Diet": animal.get("characteristics", {}).get("diet"),
+        "Location": animal.get("locations", [None])[0],
+        "Type": animal.get("characteristics", {}).get("type"),
+        "Most distinctive feature": animal.get("characteristics", {}).get("most_distinctive_feature"),
+        "Color": animal.get("characteristics", {}).get("color"),
+        "Skin type": animal.get("characteristics", {}).get("skin_type"),
+    }
+    for key, value in animal_details.items():
+        if value:
+            output += f'{key}: {value}<br/>\n'
+    output += "</li>"
+    return output
 
 
 def serialize_animals(data):
