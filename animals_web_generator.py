@@ -17,9 +17,11 @@ def serialize_animal(animal):
         Returns:
             str: An HTML string representing the animal.
     """
-    output = "<li class='cards__item'>"
+    output = '    <li class="cards__item">\n'
+    animal_name = animal.get("name", "Unknown Animal")
+    output += f'        <div class="card__title">{animal_name}</div>\n'
+    output += '        <ul>\n'
     animal_details = {
-        "Name": animal.get("name", "Unknown Animal"),
         "Scientific name": animal.get("taxonomy", {}).get("scientific_name"),
         "Diet": animal.get("characteristics", {}).get("diet"),
         "Location": animal.get("locations", [None])[0],
@@ -30,8 +32,9 @@ def serialize_animal(animal):
     }
     for key, value in animal_details.items():
         if value:
-            output += f'{key}: {value}<br/>\n'
-    output += "</li>"
+            output += f'            <li><span class="field__name">{key}:</span> {value}</li>\n'
+    output += '        </ul>\n'
+    output += '    </li>\n'
     return output
 
 
