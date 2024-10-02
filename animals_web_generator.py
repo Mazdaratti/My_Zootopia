@@ -1,10 +1,31 @@
 import json
+import sys
 
+def load_file(file_path, file_type="data"):
+    """
+    Load and return the content of a file.
 
-def load_json(file_path):
-    """Load and return the data from a JSON file."""
-    with open(file_path, "r") as json_file:
-        return json.load(json_file)
+    Args:
+        file_path (str): The path to the file.
+        file_type (str): The type of file, either "data" for JSON or "template" for HTML.
+
+    Returns:
+        data: The content of the file, parsed JSON if it's a data file or raw content otherwise.
+
+    Raises:
+        FileNotFoundError: If the file does not exist.
+        ValueError: If the file is empty or cannot be parsed (for JSON files).
+    """
+    try:
+        with open(file_path, "r") as file:
+            content = file.read() if file_type == "template" else json.load(file)
+            if not content:  # Check if the file is empty
+                raise ValueError(f"Error: The {file_type} file is empty.")
+            return content
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Error: The {file_type} file '{file_path}' was not found.")
+    except json.JSONDecodeError:
+        raise ValueError(f"Error: The JSON file '{file_path}' could not be decoded.")
 
 
 def serialize_animal(animal):
@@ -43,12 +64,6 @@ def serialize_animals(data):
     return ''.join(serialize_animal(animal) for animal in data)
 
 
-def read_file(file_path):
-    """Read and return the contents of a file."""
-    with open(file_path, "r") as file:
-        return file.read()
-
-
 def write_file(file_path, content):
     """Write the given content to a file."""
     with open(file_path, "w") as file:
@@ -56,10 +71,17 @@ def write_file(file_path, content):
 
 
 def main():
-    """Generate animal information and update the HTML template."""
-    data = load_json("animals_data.json")
+    """
+        Generate animal information, filter by skin type, update the HTML template, and open it in a browser.
+    """
+    try:
+        data = load_file("animals_data.json", file_type="data")
+        template = load_file("animals_template.html", file_type="template")
+    except (FileNotFoundError, ValueError) as e:
+        print(e)
+        sys.exit(1)
+
     animals_info = serialize_animals(data)
-    template = read_file("animals_template.html")
     updated_template = template.replace("__REPLACE_ANIMALS_INFO__", animals_info)
     write_file("animals.html", updated_template)
 
