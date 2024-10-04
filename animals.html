@@ -1,0 +1,326 @@
+<html>
+    <head>
+        <style>
+        /* Background and Font */
+        html {
+            background: linear-gradient(90deg, #a8edea 0%, #f6f6f6 50%, #fcb69f 100%);
+            width: 100%;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 1rem;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #444;
+        }
+
+        /* Card Container */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* Individual Cards */
+        .cards__item {
+            background-color: #fff;
+            border-radius: 0.5rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 1.5rem;
+            text-align: left;
+        }
+
+        .cards__item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Card Titles */
+        .card__title {
+            color: #333;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* List Styles */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .field__name {
+            font-weight: bold;
+            color: #000;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .cards {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .cards__item {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .cards__item {
+                padding: 0.8rem;
+            }
+        }
+    </style>
+    </head>
+    <body>
+        <h1>My Animal Repository</h1>
+        <ul class="cards">
+                <li class="cards__item">
+        <div class="card__title">American Foxhound</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Canis lupus</li>
+            <li><span class="field__name">Diet:</span> Omnivore</li>
+            <li><span class="field__name">Location:</span> North-America</li>
+            <li><span class="field__name">Type:</span> Hound</li>
+            <li><span class="field__name">Color:</span> BlackWhiteTan</li>
+            <li><span class="field__name">Skin type:</span> Hair</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Arctic Fox</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Vulpes lagopus</li>
+            <li><span class="field__name">Diet:</span> Carnivore</li>
+            <li><span class="field__name">Location:</span> Eurasia</li>
+            <li><span class="field__name">Type:</span> Mammal</li>
+            <li><span class="field__name">Color:</span> GreyBlackWhite</li>
+            <li><span class="field__name">Skin type:</span> Fur</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Cross Fox</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Vulpes vulpes</li>
+            <li><span class="field__name">Diet:</span> Carnivore</li>
+            <li><span class="field__name">Location:</span> North-America</li>
+            <li><span class="field__name">Type:</span> mammal</li>
+            <li><span class="field__name">Most distinctive feature:</span> The cross on its back.</li>
+            <li><span class="field__name">Color:</span> RedBlackSilver</li>
+            <li><span class="field__name">Skin type:</span> Fur</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Darwin's fox</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Lycalopex fulvipes</li>
+            <li><span class="field__name">Diet:</span> Omnivore</li>
+            <li><span class="field__name">Location:</span> South-America</li>
+            <li><span class="field__name">Type:</span> Mammal</li>
+            <li><span class="field__name">Most distinctive feature:</span> Its small size</li>
+            <li><span class="field__name">Color:</span> GreyRedBlack</li>
+            <li><span class="field__name">Skin type:</span> Fur</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">English Foxhound</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Canis lupus</li>
+            <li><span class="field__name">Diet:</span> Omnivore</li>
+            <li><span class="field__name">Location:</span> Europe</li>
+            <li><span class="field__name">Color:</span> BlackWhiteTanMulti-colored</li>
+            <li><span class="field__name">Skin type:</span> Hair</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Fennec Fox</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Vulpes zerda</li>
+            <li><span class="field__name">Diet:</span> Omnivore</li>
+            <li><span class="field__name">Location:</span> Africa</li>
+            <li><span class="field__name">Most distinctive feature:</span> Large, over-sized ears</li>
+            <li><span class="field__name">Color:</span> WhiteCreamSandy</li>
+            <li><span class="field__name">Skin type:</span> Fur</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Fox</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Vulpes vulpes</li>
+            <li><span class="field__name">Diet:</span> Carnivore</li>
+            <li><span class="field__name">Location:</span> Africa</li>
+            <li><span class="field__name">Type:</span> Mammal</li>
+            <li><span class="field__name">Color:</span> BrownRedBlackTan</li>
+            <li><span class="field__name">Skin type:</span> Fur</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Fox Snakes</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> P. vulpinus and P. ramspotti</li>
+            <li><span class="field__name">Diet:</span> Carnivore</li>
+            <li><span class="field__name">Location:</span> North-America</li>
+            <li><span class="field__name">Most distinctive feature:</span> Copper or bronze-colored head</li>
+            <li><span class="field__name">Color:</span> BrownGreyBeigeChestnut</li>
+            <li><span class="field__name">Skin type:</span> Scales</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Fox Squirrel</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Sciurus niger</li>
+            <li><span class="field__name">Diet:</span> Omnivore</li>
+            <li><span class="field__name">Location:</span> Central-America</li>
+            <li><span class="field__name">Type:</span> rodent</li>
+            <li><span class="field__name">Most distinctive feature:</span> Large size and large, bushy tail</li>
+            <li><span class="field__name">Color:</span> BrownGrey-Brown</li>
+            <li><span class="field__name">Skin type:</span> Fur</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Fox Terrier</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Canis Lupus</li>
+            <li><span class="field__name">Diet:</span> Omnivore</li>
+            <li><span class="field__name">Location:</span> Europe</li>
+            <li><span class="field__name">Skin type:</span> Hair</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Golden-Crowned Flying Fox</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Acerodon jubatus</li>
+            <li><span class="field__name">Diet:</span> Herbivore</li>
+            <li><span class="field__name">Location:</span> Asia</li>
+            <li><span class="field__name">Most distinctive feature:</span> Soft golden cap</li>
+            <li><span class="field__name">Color:</span> BlackGold</li>
+            <li><span class="field__name">Skin type:</span> Hair</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Gray Fox</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Urocyon cinereoargenteus</li>
+            <li><span class="field__name">Diet:</span> Omnivore</li>
+            <li><span class="field__name">Location:</span> Central-America</li>
+            <li><span class="field__name">Type:</span> Mammal</li>
+            <li><span class="field__name">Most distinctive feature:</span> The silver gray coat of fur</li>
+            <li><span class="field__name">Color:</span> GreyRedBlackWhite</li>
+            <li><span class="field__name">Skin type:</span> Fur</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Kit Fox</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Vulpes macrotis merriam</li>
+            <li><span class="field__name">Diet:</span> Omnivore</li>
+            <li><span class="field__name">Location:</span> Central-America</li>
+            <li><span class="field__name">Type:</span> mammal</li>
+            <li><span class="field__name">Most distinctive feature:</span> tiny bodies and enormous ears</li>
+            <li><span class="field__name">Color:</span> GreyYellowBlackWhite</li>
+            <li><span class="field__name">Skin type:</span> Fur</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Marble Fox</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Vulpes vulpes</li>
+            <li><span class="field__name">Diet:</span> Omnivore</li>
+            <li><span class="field__name">Location:</span> North-America</li>
+            <li><span class="field__name">Type:</span> Mammal</li>
+            <li><span class="field__name">Most distinctive feature:</span> The marble-colored coat</li>
+            <li><span class="field__name">Color:</span> BrownBlackWhite</li>
+            <li><span class="field__name">Skin type:</span> Fur</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Red Fox</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Vulpes vulpes</li>
+            <li><span class="field__name">Diet:</span> Omnivore</li>
+            <li><span class="field__name">Location:</span> Africa</li>
+            <li><span class="field__name">Most distinctive feature:</span> The bushy tail</li>
+            <li><span class="field__name">Color:</span> BrownGreyRedBlackSilver</li>
+            <li><span class="field__name">Skin type:</span> Hair</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Smooth Fox Terrier</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Canis lupus</li>
+            <li><span class="field__name">Diet:</span> Omnivore</li>
+            <li><span class="field__name">Location:</span> Europe</li>
+            <li><span class="field__name">Color:</span> BrownBlackWhiteTan</li>
+            <li><span class="field__name">Skin type:</span> Hair</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Tibetan Fox</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Vulpes ferrilata</li>
+            <li><span class="field__name">Diet:</span> Carnivore</li>
+            <li><span class="field__name">Location:</span> Asia</li>
+            <li><span class="field__name">Type:</span> Mammal</li>
+            <li><span class="field__name">Most distinctive feature:</span> Square-shaped skull</li>
+            <li><span class="field__name">Color:</span> GreyTan</li>
+            <li><span class="field__name">Skin type:</span> Fur</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Toy Fox Terrier</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Canis lupus</li>
+            <li><span class="field__name">Diet:</span> Omnivore</li>
+            <li><span class="field__name">Location:</span> North-America</li>
+            <li><span class="field__name">Color:</span> BlackWhiteTanChocolate</li>
+            <li><span class="field__name">Skin type:</span> Hair</li>
+        </ul>
+    </li>
+    <li class="cards__item">
+        <div class="card__title">Wire Fox Terrier</div>
+        <ul>
+            <li><span class="field__name">Scientific name:</span> Canis lupus</li>
+            <li><span class="field__name">Diet:</span> Omnivore</li>
+            <li><span class="field__name">Location:</span> Europe</li>
+            <li><span class="field__name">Color:</span> BlackWhiteTan</li>
+            <li><span class="field__name">Skin type:</span> Hair</li>
+        </ul>
+    </li>
+
+        </ul>
+    </body>
+</html>
