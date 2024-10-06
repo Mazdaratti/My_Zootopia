@@ -19,7 +19,7 @@ def load_file(file_path, file_type="data"):
             ValueError: If the file is empty or cannot be parsed (for JSON files).
     """
     try:
-        with open(file_path, "r") as file:
+        with open(file_path, "r", encoding="utf-8") as file:
             content = file.read() if file_type == "template" else json.load(file)
             if not content:  # Check if the file is empty
                 raise ValueError(f"Error: The {file_type} file is empty.")
@@ -130,7 +130,7 @@ def write_file(file_path, content):
     """
         Write the given content to a file.
     """
-    with open(file_path, "w") as file:
+    with open(file_path, "w", encoding="utf-8") as file:
         file.write(content)
         print(f"Website was successfully generated at {file_path}.")
 
