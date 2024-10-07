@@ -1,4 +1,5 @@
 import sys
+from webbrowser import open as open_browser
 from data_fetcher import fetch_data
 
 
@@ -186,6 +187,7 @@ def main():
 
     updated_template = template.replace("__REPLACE_ANIMALS_INFO__", animals_info)
     write_file("animals.html", updated_template)
+    open_browser("animals.html")
 
 
 if __name__ == "__main__":
