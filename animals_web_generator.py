@@ -1,33 +1,42 @@
-import json
 import sys
 from webbrowser import open as open_browser
+from data_fetcher import fetch_data
 
 
-def load_file(file_path, file_type="data"):
+def write_file(file_path, content):
     """
-        Load and return the content of a file.
+        Write the given content to a file.
+    """
+    with open(file_path, "w", encoding="utf-8") as file:
+        file.write(content)
+        print(f"Website was successfully generated at {file_path}.")
+
+
+def load_file(file_path):
+    """
+        Loads and returns the content of a file.
+
+        This function opens a file (in text mode), reads its content, and returns it as a string.
+        It raises an error if the file is not found or is empty.
 
         Args:
             file_path (str): The path to the file.
-            file_type (str): The type of file, either "data" for JSON or "template" for HTML.
 
         Returns:
-            data: The content of the file, parsed JSON if it's a data file or raw content otherwise.
+            str: The content of the file as a string.
 
         Raises:
             FileNotFoundError: If the file does not exist.
-            ValueError: If the file is empty or cannot be parsed (for JSON files).
+            ValueError: If the file is empty.
     """
     try:
         with open(file_path, "r", encoding="utf-8") as file:
-            content = file.read() if file_type == "template" else json.load(file)
-            if not content:  # Check if the file is empty
-                raise ValueError(f"Error: The {file_type} file is empty.")
+            content = file.read()
+            if not content:
+                raise ValueError(f"Error: The file {file_path} is empty.")
             return content
     except FileNotFoundError:
-        raise FileNotFoundError(f"Error: The {file_type} file '{file_path}' was not found.")
-    except json.JSONDecodeError:
-        raise ValueError(f"Error: The JSON file '{file_path}' could not be decoded.")
+        raise FileNotFoundError(f"Error: The file '{file_path}' was not found.")
 
 
 def serialize_animal(animal):
@@ -79,7 +88,7 @@ def serialize_animals(data, skin_type=None):
     )
 
 
-def generate_list_of_values(data):
+def generate_list_of_features(data):
     """
         Generate a list of unique skin types from animal data, including an 'All skin types' option.
 
@@ -89,21 +98,22 @@ def generate_list_of_values(data):
         Returns:
             list: A list of skin types.
     """
-    values = ["All skin types"]
-    values.extend({animal.get("characteristics", {}).get("skin_type") for animal in data if animal.get("characteristics", {}).get("skin_type")})
-    return values
+    features = ["All skin types"]
+    features.extend({animal.get("characteristics", {}).get("skin_type") for animal in data if
+                     animal.get("characteristics", {}).get("skin_type")})
+    return features
 
 
-def display_menu(values):
+def display_menu(features):
     """
         Display a menu for selecting skin type.
 
         Args:
-            values (list): A list of skin types.
+            features (list): A list of skin types.
     """
     print("\nPlease choose the skin type of animals you want to see:")
-    for index, value in enumerate(values):
-        print(f"{index}. {value}")
+    for index, feature in enumerate(features):
+        print(f"{index}. {feature}")
     print()
 
 
@@ -126,31 +136,54 @@ def get_user_choice(menu_entries):
         print(f"Invalid choice: [{user_input}]")
 
 
-def write_file(file_path, content):
+def get_animal_name():
     """
-        Write the given content to a file.
+        Prompts the user to input the name of the animal they're looking for and validates the input.
+
+        Continuously prompts the user until a valid string with at least 2 characters is entered.
+
+        Returns:
+            str: The validated animal name entered by the user.
     """
-    with open(file_path, "w", encoding="utf-8") as file:
-        file.write(content)
-        print(f"Website was successfully generated at {file_path}.")
+    while True:
+        search_key = input("Enter the name of the animal you want to get information about (at least 3 characters):")
+        if isinstance(search_key, str) and len(search_key) > 2:
+            return search_key
+        else:
+            print('Input must be a string with at least 2 characters. Please try again.')
 
 
 def main():
     """
-        Generate animal information, filter by skin type, update the HTML template, and open it in a browser.
+        Generate animal information based on user input, filter by skin type, update the HTML template,
+        and open it in a browser.
+
+        This function interacts with the user to retrieve animal data, update an HTML template with the information,
+        and display the output in a web browser. It handles cases where the animal does not exist or when the necessary
+        template file is missing. The user is prompted to filter animals by skin type, and the chosen data is serialized
+        into the HTML template.
+
+        Raises:
+            FileNotFoundError: If the HTML template file is missing.
+            ValueError: If the API key is missing or invalid, or no data is fetched from the API.
     """
+
+    search_key = get_animal_name()
+
     try:
-        data = load_file("animals_data.json", file_type="data")
-        template = load_file("animals_template.html", file_type="template")
+        data = fetch_data(search_key)
+        template = load_file("animals_template.html")
     except (FileNotFoundError, ValueError) as e:
-        print(e)
+        print(f"Error: {e}")
         sys.exit(1)
 
-    values = generate_list_of_values(data)
-    display_menu(values)
-
-    choice = get_user_choice(values)
-    animals_info = serialize_animals(data) if choice == 0 else serialize_animals(data, values[choice])
+    if not data:
+        animals_info = f"<h2>The animal \"{search_key}\" doesn't exist.</h2>"
+    else:
+        features = generate_list_of_features(data)
+        display_menu(features)
+        choice = get_user_choice(features)
+        animals_info = serialize_animals(data) if choice == 0 else serialize_animals(data, features[choice])
 
     updated_template = template.replace("__REPLACE_ANIMALS_INFO__", animals_info)
     write_file("animals.html", updated_template)
@@ -159,5 +192,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
