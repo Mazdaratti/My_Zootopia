@@ -3,6 +3,9 @@ from dotenv import load_dotenv
 import requests
 
 
+API_URL = 'https://api.api-ninjas.com/v1/animals?name={}'
+
+
 def load_api_key():
     """
         Loads the API key from environment variables.
@@ -21,7 +24,7 @@ def load_api_key():
     api_key = os.getenv('API_KEY')
 
     if not api_key or len(api_key) != 40:
-        raise ValueError("Invalid or missing API key. Please check your .env file.")
+        raise ValueError(f"Invalid or missing API key [{api_key}]. Please check your .env file.")
 
     return api_key
 
@@ -39,12 +42,14 @@ def fetch_data(animal_name):
 
     Returns:
         list: A list of dictionaries containing the animal data, or None if the request fails.
+
+    Raises:
+        requests.exceptions.HTTPError: If the request fails with a status code other than 200.
     """
-    api_url = 'https://api.api-ninjas.com/v1/animals?name={}'.format(animal_name)
-    res = requests.get(api_url, headers={'X-Api-Key': load_api_key()})
+
+    res = requests.get(API_URL.format(animal_name), headers={'X-Api-Key': load_api_key()})
 
     if res.status_code == requests.codes.ok:
         return res.json()
     else:
-        print("Error:", res.status_code, res.text)
-        return None
+        raise requests.exceptions.HTTPError(f"Error: {res.status_code}, {res.text}")
