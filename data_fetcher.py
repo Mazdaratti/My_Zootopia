@@ -10,9 +10,9 @@ def load_api_key():
     """
         Loads the API key from environment variables.
 
-        This function loads environment variables using `load_dotenv` and retrieves the API key from
-        the 'API_KEY' environment variable. If the API key is missing or invalid (not 40 characters long),
-        it raises a ValueError.
+        This function loads environment variables using `load_dotenv` and retrieves the API key
+        from the 'API_KEY' environment variable. If the API key is missing or invalid
+        (not 40 characters long),it raises a ValueError.
 
         Returns:
             str: The API key as a string.

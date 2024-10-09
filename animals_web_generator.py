@@ -146,7 +146,8 @@ def get_animal_name():
             str: The validated animal name entered by the user.
     """
     while True:
-        search_key = input("Enter the name of the animal you want to get information about (at least 3 characters):")
+        search_key = input("Enter the name of the animal you want to get information about"
+                           " (at least 3 characters):")
         if isinstance(search_key, str) and len(search_key) > 2:
             return search_key
         else:
@@ -158,10 +159,10 @@ def main():
         Generate animal information based on user input, filter by skin type, update the HTML template,
         and open it in a browser.
 
-        This function interacts with the user to retrieve animal data, update an HTML template with the information,
-        and display the output in a web browser. It handles cases where the animal does not exist or when the necessary
-        template file is missing. The user is prompted to filter animals by skin type, and the chosen data is serialized
-        into the HTML template.
+        This function interacts with the user to retrieve animal data, update an HTML template
+        with the information,and display the output in a web browser. It handles cases where
+        the animal does not exist or when the necessary template file is missing. The user is prompted
+        to filter animals by skin type, and the chosen data is serialized into the HTML template.
 
         Raises:
             FileNotFoundError: If the HTML template file is missing.
