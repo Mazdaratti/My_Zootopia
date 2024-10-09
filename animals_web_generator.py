@@ -150,8 +150,7 @@ def get_animal_name():
                            " (at least 3 characters):")
         if isinstance(search_key, str) and len(search_key) > 2:
             return search_key
-        else:
-            print('Input must be a string with at least 2 characters. Please try again.')
+        print('Input must be a string with at least 2 characters. Please try again.')
 
 
 def main():
