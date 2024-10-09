@@ -47,7 +47,7 @@ def fetch_data(animal_name):
         requests.exceptions.HTTPError: If the request fails with a status code other than 200.
     """
 
-    res = requests.get(API_URL.format(animal_name), headers={'X-Api-Key': load_api_key()})
+    res = requests.get(API_URL.format(animal_name), headers={'X-Api-Key': load_api_key()}, timeout=5)
 
     if res.status_code == requests.codes.ok:
         return res.json()
